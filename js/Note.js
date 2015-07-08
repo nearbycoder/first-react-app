@@ -10,7 +10,15 @@ var Note = React.createClass({
 			};
 		},
 		componentDidMount: function() {
-			$(this.getDOMNode()).draggable();
+			$(this.getDOMNode()).draggable({
+				drag: function(event, ui){
+					var rotateCSS = 'rotate(' + ui.position.left + 'deg)';
+					$(this).css({
+			      '-moz-transform': rotateCSS,
+			      '-webkit-transform': rotateCSS
+			    });
+				}
+			}).resizable();
 		},
 		randomBetween: function(min, max) {
 			return (min + Math.ceil(Math.random() * max));
