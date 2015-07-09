@@ -13,6 +13,7 @@ var Note = React.createClass({
 		componentDidMount: function() {
 			var _this = this;
 			$(this.getDOMNode()).draggable({
+				containment: "window",
 				drag: function(event, ui){
 					if(_this.willRotate === true){
 						var rotateCSS = 'rotate(' + ui.position.left + 'deg)';
