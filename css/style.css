@@ -20,6 +20,10 @@ div.board {
 
 }
 
+.handle {
+    float: left;
+}
+
 div.note {
     height: 150px;
     width: 150px;
@@ -51,12 +55,15 @@ div.note > span {
     position: absolute;
     bottom: 2px;
     right: 2px;
+    width: 100%;
     opacity: 0;
     transition: opacity .25s linear;
 }
 
 div.note button {
-    margin: 2px;
+    float: right;
+    margin-right: 7px;
+    margin-bottom: 2px;
 }
 
 div.note > textarea {

@@ -1,8 +1,9 @@
 var Note = React.createClass({
 		getInitialState: function() {
-			return {editing: false}
+			return {editing: false, rotate: false}
 		},
 		componentWillMount: function() {
+			this.willRotate = false;
 			this.style = {
 				right: this.randomBetween(0, window.innerWidth - 150) + 'px',
 				top: this.randomBetween(0, window.innerHeight - 150) + 'px',
@@ -10,13 +11,16 @@ var Note = React.createClass({
 			};
 		},
 		componentDidMount: function() {
+			var _this = this;
 			$(this.getDOMNode()).draggable({
 				drag: function(event, ui){
-					var rotateCSS = 'rotate(' + ui.position.left + 'deg)';
-					$(this).css({
-			      '-moz-transform': rotateCSS,
-			      '-webkit-transform': rotateCSS
-			    });
+					if(_this.willRotate === true){
+						var rotateCSS = 'rotate(' + ui.position.left + 'deg)';
+						$(this).closest(".note").css({
+				      '-moz-transform': rotateCSS,
+				      '-webkit-transform': rotateCSS
+				    });
+					}
 				}
 			}).resizable();
 		},
@@ -25,6 +29,17 @@ var Note = React.createClass({
 		},
 		edit: function() {
 			this.setState({editing: true});
+		},
+		rotate: function() {
+			
+			handle = $(this.getDOMNode()).find('.handle');
+			if(handle.css('background-color') == 'rgb(201, 48, 44)'){
+				$(this.getDOMNode()).find('.handle').css({'background-color':'#337ab7'});
+				this.willRotate = false;
+			}else{
+				$(this.getDOMNode()).find('.handle').css({'background-color':'#C9302C'});
+				this.willRotate = true;
+			}
 		},
 		save: function() {
 			this.props.onChange(this.refs.newText.getDOMNode().value, this.props.index);
@@ -35,9 +50,10 @@ var Note = React.createClass({
 		},
 		renderDisplay: function() {
 			return (
-    		<div className="note" style={this.style}>
+    		<div className="note" ref="note" style={this.style}>
     			<p>{this.props.children}</p>
     			<span>
+    				<button onClick={this.rotate} className="handle btn btn-primary glyphicon glyphicon-refresh"/>
     				<button onClick={this.edit} 
     								className="btn btn-primary glyphicon glyphicon-pencil"/>
     				<button onClick={this.remove} 
@@ -133,5 +149,5 @@ var Board = React.createClass({
 	}
 })
 
-React.render(<Board count={10} />, 
+React.render(<Board count={1} />, 
     document.getElementById('react-container'));
