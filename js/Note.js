@@ -4,10 +4,12 @@ var Note = React.createClass({
 		},
 		componentWillMount: function() {
 			this.willRotate = false;
+			this.colors = ['#311b92','#006064', '#e65100', '#263238', '#0d47a1', '#f57f17', '#33691e', '#004d40', '#ffd600', '#b71c1c', '#4a148c'];
 			this.style = {
 				right: this.randomBetween(0, window.innerWidth - 150) + 'px',
 				top: this.randomBetween(0, window.innerHeight - 150) + 'px',
-				transform: 'rotate(' + this.randomBetween(-15, 15) + 'deg)'
+				transform: 'rotate(' + this.randomBetween(-15, 15) + 'deg)',
+				backgroundColor: this.colors[Math.floor(Math.random()*this.colors.length)]
 			};
 		},
 		componentDidMount: function() {
